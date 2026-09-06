@@ -1,0 +1,47 @@
+# Unity-generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# IDEs and generated projects
+.idea/
+.vs/
+.vscode/
+__pycache__/
+*.py[cod]
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Operating systems
+.DS_Store
+Thumbs.db
+
+# Secrets and local agent state
+.env
+.env.*
+!.env.example
+.codex/
+meshy_output/
+
+# Unity crash and build artifacts
+sysinfo.txt
+crashlytics-build.properties
+*.apk
+*.aab
+*.unitypackage
