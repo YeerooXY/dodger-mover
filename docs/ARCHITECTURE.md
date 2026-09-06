@@ -39,4 +39,3 @@ Playable slices target:
 ## Content boundaries
 
 Game rules should be data-driven only where designers benefit from iteration. Avoid generic frameworks and deep inheritance trees. Prefer small immutable definitions, explicit state machines, and composition.
-

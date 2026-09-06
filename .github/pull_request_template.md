@@ -28,4 +28,3 @@ Summarize test/build evidence, performance observations, and remaining uncertain
 - [ ] No new assets
 - [ ] Provenance recorded for every new asset
 - [ ] Meshy batch was explicitly approved and remained within the daily budget
-

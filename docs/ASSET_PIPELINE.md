@@ -37,4 +37,3 @@ Every generated or third-party production asset records:
 - `MESHY_API_KEY` stays in secret storage or a local ignored environment file.
 
 Repository code plans and reserves work; actual Meshy API calls use the official installed Meshy integration rather than a second API implementation.
-

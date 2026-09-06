@@ -63,4 +63,3 @@ Maximum autonomous review/fix passes per pull-request revision: three. After tha
 
 - Flag generated or third-party assets without provenance, source, and usage-rights records.
 - Flag secrets, personal tokens, API keys, or unsafe workflow permissions. Workflows receive the minimum permissions needed for their job.
-

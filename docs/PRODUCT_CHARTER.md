@@ -47,4 +47,3 @@ A polished 20-30 minute Windows demo containing:
 ## Definition of fun for the first prototype
 
 S001 succeeds when the player voluntarily repeats the room to try a different sequence, not merely when every planned feature exists.
-

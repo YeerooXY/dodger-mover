@@ -69,4 +69,3 @@ Play for five minutes without reading the move list beyond the displayed control
 2. What felt slow, weak, confusing, or accidental?
 3. Did you voluntarily try a different sequence after understanding the controls?
 4. If you could change only one thing, what would it be?
-

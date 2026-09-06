@@ -27,4 +27,3 @@ Separate observation from inference. Note confidence and competing explanations.
 ## Next decision
 
 State whether the slice passes, needs a focused correction, or invalidates an assumption.
-

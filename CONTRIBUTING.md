@@ -11,4 +11,3 @@ Before opening a pull request:
 5. Add provenance for every new asset.
 
 Pull requests should remain small enough to review as one coherent outcome. Mechanical refactors and gameplay changes should be separate unless the refactor is strictly required by the slice.
-

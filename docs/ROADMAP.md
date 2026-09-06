@@ -21,4 +21,3 @@ One authored gauntlet with an initial visual identity, style scoring, complete f
 ## S004 — Demo production plan
 
 The first full content plan is written only after S003 evidence. Candidate work includes progression, encounter variety, a boss, accessibility, content tools, and release packaging.
-

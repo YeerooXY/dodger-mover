@@ -19,4 +19,3 @@ Do not purchase or introduce Spine during the impact prototype. Revisit characte
 - Pure domain logic remains fast to test and less coupled to engine lifecycle details.
 - Unity licensing is required for CI builds and must be configured once before playable-slice automation can be fully green.
 - Render-pipeline and input packages are pinned; upgrades require a dedicated pull request and evidence.
-

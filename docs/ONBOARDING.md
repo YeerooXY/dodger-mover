@@ -24,4 +24,3 @@ Never commit the Unity license, OpenAI credentials, `MESHY_API_KEY`, or account 
 ## Playtest machine
 
 Playable slices will publish a zipped Windows development build. The player should not need Unity, Python, or repository access to test it.
-

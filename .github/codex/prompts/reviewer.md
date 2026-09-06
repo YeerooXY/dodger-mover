@@ -12,4 +12,3 @@ Do not edit files. Return:
 4. `<!-- dodger-loop:review:HEAD_SHA -->`, replacing `HEAD_SHA` with the reviewed commit.
 
 If no consequential findings exist, say so explicitly. Do not invent style work.
-

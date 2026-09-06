@@ -55,3 +55,4 @@ Create a repository that can safely support autonomous, review-driven game devel
 - Unity 6.3's documented package lines are pinned: Input System 1.20.0, URP 17.3.0, and Test Framework 1.6.0. The first editor import must still generate resolution evidence.
 - Because the repository is public, write-capable webhook behavior is restricted to owner-authored, same-repository branches. External pull requests and untrusted comments cannot authorize mutations.
 - The independent foundation review reported no remaining findings. Unity import, EditMode execution, package-lock generation, and the first live GitHub CI/webhook event remain explicitly unverified.
+- The first live repository-guard event reached the coordinator and rejected duplicate terminal blank lines that local non-Git checks could not see. This revision normalizes every tracked text file and adds an explicit no-index whitespace verification to the evidence run.
