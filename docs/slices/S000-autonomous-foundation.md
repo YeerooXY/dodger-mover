@@ -1,6 +1,6 @@
 # S000: Autonomous foundation
 
-- Status: REVIEWING
+- Status: DONE
 - Owner role: Planner
 - Player build: Not required
 
@@ -43,9 +43,9 @@ Create a repository that can safely support autonomous, review-driven game devel
 - [x] Local verification complete: 11 repository automation tests and repository guard pass.
 - [ ] Unity EditMode execution: not run because Unity is unavailable in the implementation environment; manual CI remains gated on `UNITY_LICENSE`.
 - [x] Independent review complete: no unresolved P0-P3 findings after the correction pass.
-- [ ] Pull request opened.
+- [x] Pull request #1 opened.
 - [x] Event automation creation succeeded for pull-request lifecycle, commit, review, and comment events.
-- [ ] Event automation live verification: pending the first pull-request event.
+- [x] Event automation live verification: an owner-authored wake event produced a SHA-scoped READY review for the green correction commit.
 
 ## Decisions and discoveries
 
@@ -54,5 +54,6 @@ Create a repository that can safely support autonomous, review-driven game devel
 - Unity is not installed in the implementation environment. No claim is made that EditMode tests passed; the first licensed CI run is an explicit remaining gate before S001 implementation.
 - Unity 6.3's documented package lines are pinned: Input System 1.20.0, URP 17.3.0, and Test Framework 1.6.0. The first editor import must still generate resolution evidence.
 - Because the repository is public, write-capable webhook behavior is restricted to owner-authored, same-repository branches. External pull requests and untrusted comments cannot authorize mutations.
-- The independent foundation review reported no remaining findings. Unity import, EditMode execution, package-lock generation, and the first live GitHub CI/webhook event remain explicitly unverified.
+- The independent foundation review reported no remaining findings. Unity import, EditMode execution, and package-lock generation remain explicitly unverified.
 - The first live repository-guard event reached the coordinator and rejected duplicate terminal blank lines that local non-Git checks could not see. This revision normalizes every tracked text file and adds an explicit no-index whitespace verification to the evidence run.
+- The first live coordinator review produced a READY verdict for the exact green head SHA. It correctly made no mutation or merge because the protected base contains only the bootstrap README; root policy becomes authoritative after this slice merges.
