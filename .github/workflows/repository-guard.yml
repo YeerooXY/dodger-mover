@@ -1,0 +1,66 @@
+name: Repository Guard
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+
+concurrency:
+    group: repository-guard-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    validate:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+              with:
+                  fetch-depth: 0
+
+            - name: Set up Python
+              uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+              with:
+                  python-version: "3.12"
+
+            - name: Check whitespace
+              env:
+                  BASE_SHA: ${{ github.event.pull_request.base.sha }}
+              run: |
+                  if [ -n "$BASE_SHA" ]; then
+                    git diff --check "$BASE_SHA"..HEAD
+                  else
+                    git show --check --format= HEAD
+                  fi
+
+            - name: Test automation tools
+              run: python -m unittest discover -s tools/tests -p "test_*.py"
+
+            - name: Validate repository contracts
+              run: python tools/repo_guard.py
+
+    notify-coordinator:
+        needs: validate
+        if: >-
+            always() &&
+            github.event_name == 'pull_request' &&
+            github.event.pull_request.user.login == 'YeerooXY'
+        runs-on: ubuntu-latest
+        timeout-minutes: 2
+        permissions:
+            pull-requests: write
+        steps:
+            - name: Publish CI wake marker
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  PR_URL: ${{ github.event.pull_request.html_url }}
+                  HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+                  GUARD_RESULT: ${{ needs.validate.result }}
+              run: >-
+                  gh pr comment "$PR_URL"
+                  --body "<!-- dodger-loop:ci:${HEAD_SHA} --> Repository Guard: ${GUARD_RESULT}."

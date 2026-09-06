@@ -1,0 +1,21 @@
+{
+    "name": "DodgerMover.Tests.EditMode",
+    "rootNamespace": "DodgerMover.Tests",
+    "references": [
+        "DodgerMover.Domain"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}

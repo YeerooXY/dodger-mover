@@ -1,0 +1,43 @@
+name: Unity Tests
+
+# Enabled manually during S000. Change to pull_request after the repository's
+# UNITY_LICENSE secret has been configured and the first editor import is committed.
+on:
+    workflow_dispatch:
+
+concurrency:
+    group: unity-tests-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+    checks: write
+
+jobs:
+    edit-mode:
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+              with:
+                  lfs: true
+
+            - name: Run Unity EditMode tests
+              uses: game-ci/unity-test-runner@0ff419b913a3630032cbe0de48a0099b5a9f0ed9 # v4
+              env:
+                  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+              with:
+                  githubToken: ${{ secrets.GITHUB_TOKEN }}
+                  unityVersion: 6000.3.12f1
+                  testMode: EditMode
+                  artifactsPath: test-results
+
+            - name: Upload test evidence
+              if: always()
+              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+              with:
+                  name: unity-editmode-results
+                  path: test-results
+                  if-no-files-found: warn
+                  retention-days: 14
