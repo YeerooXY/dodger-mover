@@ -1,0 +1,6 @@
+{
+    "name": "DodgerMover.Tests.PlayMode",
+    "references": ["DodgerMover.Domain", "DodgerMover.Application", "DodgerMover.Presentation", "Unity.InputSystem"],
+    "optionalUnityReferences": ["TestAssemblies"],
+    "autoReferenced": false
+}

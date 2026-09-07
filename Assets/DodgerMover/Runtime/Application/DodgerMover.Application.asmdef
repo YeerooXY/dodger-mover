@@ -1,0 +1,6 @@
+{
+    "name": "DodgerMover.Application",
+    "rootNamespace": "DodgerMover",
+    "references": ["DodgerMover.Domain"],
+    "noEngineReferences": true
+}

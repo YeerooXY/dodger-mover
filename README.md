@@ -34,6 +34,8 @@ python tools/repo_guard.py
 
 ## Current status
 
-S000 foundation is under review. S001 is specified but must not expand beyond its acceptance criteria until its playtest is complete.
+S000 foundation was merged in PR #1. S001 implements the Impact Proof room: 40 EditMode tests, 6 PlayMode tests, and the Windows development build passed locally. Independent review found no unresolved consequential issues. Final visual verification and hosted Unity CI remain pending; the latter requires repository activation secrets before merge.
+
+Open `Assets/DodgerMover/Scenes/ImpactProof.unity` and press Play, or run the Windows development build. See the [five-minute playtest card](docs/playtests/S001-impact-proof.md) and [S001 evidence](docs/slices/S001-impact-proof.md). Development stops at this slice's playtest boundary before adding content.
 
 No open-source license has been granted yet. All rights remain with the repository owner.

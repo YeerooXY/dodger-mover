@@ -1,7 +1,7 @@
 name: Unity Tests
 
-# Enabled manually during S000. Change to pull_request after the repository's
-# UNITY_LICENSE secret has been configured and the first editor import is committed.
+# Keep manual until the first licensed run passes. Then add pull_request and
+# require both test modes plus the Windows build before merging playable slices.
 on:
     workflow_dispatch:
 
@@ -14,30 +14,80 @@ permissions:
     checks: write
 
 jobs:
-    edit-mode:
+    tests:
         runs-on: ubuntu-latest
         timeout-minutes: 30
+        strategy:
+            fail-fast: false
+            matrix:
+                mode: [editmode, playmode]
+        steps:
+            - name: Verify activation setup
+              env:
+                  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+                  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+                  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+              run: |
+                  if [ -z "$UNITY_LICENSE" ] || [ -z "$UNITY_EMAIL" ] || [ -z "$UNITY_PASSWORD" ]; then
+                    echo '::error::Configure UNITY_LICENSE (.ulf), UNITY_EMAIL, and UNITY_PASSWORD in repository Actions secrets. See docs/ONBOARDING.md.'
+                    exit 1
+                  fi
+
+            - name: Check out repository
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+              with:
+                  lfs: true
+
+            - name: Run Unity tests
+              uses: game-ci/unity-test-runner@0ff419b913a3630032cbe0de48a0099b5a9f0ed9 # v4
+              env:
+                  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+                  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+                  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+              with:
+                  githubToken: ${{ secrets.GITHUB_TOKEN }}
+                  unityVersion: 6000.3.12f1
+                  testMode: ${{ matrix.mode }}
+                  artifactsPath: test-results
+                  checkName: Unity ${{ matrix.mode }}
+
+            - name: Upload test evidence
+              if: always()
+              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+              with:
+                  name: unity-${{ matrix.mode }}-results
+                  path: test-results
+                  if-no-files-found: warn
+                  retention-days: 14
+
+    windows-build:
+        needs: tests
+        runs-on: ubuntu-latest
+        timeout-minutes: 40
+        permissions:
+            contents: read
         steps:
             - name: Check out repository
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
               with:
                   lfs: true
 
-            - name: Run Unity EditMode tests
-              uses: game-ci/unity-test-runner@0ff419b913a3630032cbe0de48a0099b5a9f0ed9 # v4
+            - name: Build Windows development player
+              uses: game-ci/unity-builder@4423ee75828dff56037d1d1cfdac6b68e3a6ba00 # v4
               env:
                   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+                  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+                  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
               with:
-                  githubToken: ${{ secrets.GITHUB_TOKEN }}
                   unityVersion: 6000.3.12f1
-                  testMode: EditMode
-                  artifactsPath: test-results
+                  targetPlatform: StandaloneWindows64
+                  buildMethod: DodgerMover.Editor.ImpactProject.BuildWindows
+                  versioning: None
 
-            - name: Upload test evidence
-              if: always()
+            - name: Upload Windows playtest
               uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
               with:
-                  name: unity-editmode-results
-                  path: test-results
-                  if-no-files-found: warn
+                  name: S001-ImpactProof-Windows-${{ github.sha }}
+                  path: Builds/S001-ImpactProof
+                  if-no-files-found: error
                   retention-days: 14

@@ -76,11 +76,11 @@ def _check_unity_metadata(errors: list[str]) -> None:
 def _check_forbidden_paths(errors: list[str]) -> None:
     for relative in _tracked_paths():
         if any(part in TRANSIENT_DIRECTORY_NAMES for part in relative.parts):
-            errors.append(f"Unity transient path present: {relative}")
+            errors.append(f"Unity transient path present: {relative.as_posix()}")
         if relative.name in SECRET_FILENAMES or (
             relative.name.startswith(".env.") and relative.name != ".env.example"
         ):
-            errors.append(f"possible credential file present: {relative}")
+            errors.append(f"possible credential file present: {relative.as_posix()}")
 
 
 def _tracked_paths() -> tuple[Path, ...]:
