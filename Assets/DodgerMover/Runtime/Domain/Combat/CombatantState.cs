@@ -27,6 +27,14 @@ namespace DodgerMover.Combat
 
         public bool IsDefeated => Health == 0;
 
+        public void Reset()
+        {
+            Health = MaxHealth;
+            HitStunTicksRemaining = 0;
+            HorizontalVelocity = 0;
+            VerticalVelocity = 0;
+        }
+
         public void Apply(HitResolution hit)
         {
             if (IsDefeated)
@@ -38,6 +46,7 @@ namespace DodgerMover.Combat
             HitStunTicksRemaining = Math.Max(HitStunTicksRemaining, hit.HitStunTicks);
             HorizontalVelocity = hit.HorizontalVelocity;
             VerticalVelocity = hit.VerticalVelocity;
+            if (IsDefeated) HitStunTicksRemaining = 0;
         }
 
         public void AdvanceTick()

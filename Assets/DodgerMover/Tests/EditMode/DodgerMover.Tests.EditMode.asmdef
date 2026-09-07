@@ -2,7 +2,8 @@
     "name": "DodgerMover.Tests.EditMode",
     "rootNamespace": "DodgerMover.Tests",
     "references": [
-        "DodgerMover.Domain"
+        "DodgerMover.Domain",
+        "DodgerMover.Application"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,0 +1,5 @@
+{
+    "name": "DodgerMover.Presentation",
+    "rootNamespace": "DodgerMover",
+    "references": ["DodgerMover.Domain", "DodgerMover.Application", "Unity.InputSystem", "Unity.ugui"]
+}

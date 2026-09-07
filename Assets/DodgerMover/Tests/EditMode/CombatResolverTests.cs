@@ -70,5 +70,21 @@ namespace DodgerMover.Tests
 
             Assert.That(result.Damage, Is.EqualTo(int.MaxValue));
         }
+
+        [Test]
+        public void DefeatClearsStunIgnoresFurtherHitsAndResetRestoresVitals()
+        {
+            var state = new CombatantState(10);
+            state.Apply(new HitResolution("finish", 12, 30, 4, 6));
+            Assert.That(state.IsDefeated, Is.True);
+            Assert.That(state.HitStunTicksRemaining, Is.Zero);
+            state.Apply(new HitResolution("late", 2, 60, 90, 90));
+            Assert.That(state.HorizontalVelocity, Is.EqualTo(4));
+            state.Reset();
+            Assert.That(state.Health, Is.EqualTo(10));
+            Assert.That(state.IsDefeated, Is.False);
+            Assert.That(state.HorizontalVelocity, Is.Zero);
+            Assert.That(state.VerticalVelocity, Is.Zero);
+        }
     }
 }
